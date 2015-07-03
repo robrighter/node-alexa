@@ -1,0 +1,25 @@
+{
+  "name": "node-alexa",
+  "version": "1.0.0",
+  "description": "Event emitter for building amazon echo skills",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robrighter/node-alexa.git"
+  },
+  "keywords": [
+    "amazon",
+    "echo",
+    "alexa",
+    "skill"
+  ],
+  "author": "Rob Righter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/robrighter/node-alexa/issues"
+  },
+  "homepage": "https://github.com/robrighter/node-alexa"
+}
