@@ -61,7 +61,7 @@ function AmazonEchoApp(redisClient, appName, aesKey){
 	function incomingSpeaking(request,response){
 
 		var userId = null;
-		var callback = function(shouldEndSession, speechText, cardTitle, cardSubtitle, cardContents, sessionObject, userObject){
+		var callback = function(shouldEndSession, speechText, cardTitle, cardSubtitle, cardContents, sessionObject, repromptText, userObject){
 			if( (userId !== null) && (userObject !== null) ){
 				setUserObjectInRedis(userId, userObject, function(err, result){
 					if(err){
@@ -73,7 +73,7 @@ function AmazonEchoApp(redisClient, appName, aesKey){
 					}
 				});
 			}
-			response.json(makeReply(shouldEndSession, speechText, cardTitle, cardSubtitle, cardContents, sessionObject));
+			response.json(makeReply(shouldEndSession, speechText, cardTitle, cardSubtitle, cardContents, sessionObject, repromptText));
 		};
 
 		try{
