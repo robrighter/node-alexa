@@ -125,7 +125,7 @@ function AmazonEchoApp(redisClient, appName, aesKey){
 		 return callback(true, errorText, 'Oops, we encountered a problem', 'error occured', errorText);
 	}
 
-	function makeReply(shouldEndSession, speechText, cardTitle, cardSubtitle, cardContents, sessionObject){
+	function makeReply(shouldEndSession, speechText, cardTitle, cardSubtitle, cardContents, sessionObject, repromptText){
 		var ret = {
 			"version" : "1.0",
 			"response" : {
@@ -138,6 +138,12 @@ function AmazonEchoApp(redisClient, appName, aesKey){
 					"title" : cardTitle,
 					"subtitle" : cardSubtitle,
 					"content" : cardContents
+				},
+				"reprompt": {
+					"outputSpeech": {
+						"type": "PlainText",
+						"text": repromptText
+					}
 				},
 				"shouldEndSession" : shouldEndSession
 			}
