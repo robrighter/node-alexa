@@ -61,7 +61,7 @@ function AmazonEchoApp(redisClient, appName, aesKey){
 	function incomingSpeaking(request,response){
 
 		var userId = null;
-		var callback = function(shouldEndSession, speechText, cardTitle, cardSubtitle, cardContents, sessionObject, userObject){
+		var callback = function(shouldEndSession, speechText, cardTitle, cardSubtitle, cardContents, sessionObject, repromptText, userObject){
 			if( (userId !== null) && (userObject !== null) ){
 				setUserObjectInRedis(userId, userObject, function(err, result){
 					if(err){
@@ -73,7 +73,7 @@ function AmazonEchoApp(redisClient, appName, aesKey){
 					}
 				});
 			}
-			response.json(makeReply(shouldEndSession, speechText, cardTitle, cardSubtitle, cardContents, sessionObject));
+			response.json(makeReply(shouldEndSession, speechText, cardTitle, cardSubtitle, cardContents, sessionObject, repromptText));
 		};
 
 		try{
@@ -125,7 +125,7 @@ function AmazonEchoApp(redisClient, appName, aesKey){
 		 return callback(true, errorText, 'Oops, we encountered a problem', 'error occured', errorText);
 	}
 
-	function makeReply(shouldEndSession, speechText, cardTitle, cardSubtitle, cardContents, sessionObject){
+	function makeReply(shouldEndSession, speechText, cardTitle, cardSubtitle, cardContents, sessionObject, repromptText){
 		var ret = {
 			"version" : "1.0",
 			"response" : {
@@ -138,6 +138,12 @@ function AmazonEchoApp(redisClient, appName, aesKey){
 					"title" : cardTitle,
 					"subtitle" : cardSubtitle,
 					"content" : cardContents
+				},
+				"reprompt": {
+					"outputSpeech": {
+						"type": "PlainText",
+						"text": repromptText
+					}
 				},
 				"shouldEndSession" : shouldEndSession
 			}
